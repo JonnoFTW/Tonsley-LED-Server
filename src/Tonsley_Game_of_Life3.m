@@ -64,7 +64,6 @@ for count = 1:Ninit,
         X( kx + p, ky + p, i) = ( rand( 3) > 0.5);
     end
 end
-
 % Here we generate index vectors for four of the eight neighbors.
 % We use periodic (torus) boundary conditions at the edges of the universe.
 n = [ N( 2) 1:N( 2) - 1];
@@ -83,9 +82,10 @@ if figure_window
         figpos( 3) = ceil( figpos( 4) * N( 1) / N( 2));
     end
     figpos( 3:4) = figpos( 3:4) / 2;
-    
+   % closeF = @(dat)dat.stopThread();
     % set up figure window
     hf = figure( 1);
+   % set( hf, 'DeleteFcn', closeF(dataAcceptThread));
     set( hf, 'Position', figpos);
     plothandle = zeros( 1, 3);
     for c = 1:3,
@@ -144,7 +144,6 @@ while ~isempty( setxor( get( hf, 'CurrentModifier'), exit_modifiers))
         if verbose, fprintf( 'Writing to leds\n'); end
         image2leds( X, htcpip);
     end
-    
     
     % and wait
     pause( pause_time);  
